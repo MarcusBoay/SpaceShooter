@@ -7,7 +7,10 @@ public class PlayerController : MonoBehaviour
     float moveVertical;
     public float speed;
     private Rigidbody2D rb2d;
+
     public GameObject Bullet;
+    public float fireRate;
+    private float nextFire = 0.0f;
 
     // Use this for initialization
     void Start()
@@ -15,7 +18,7 @@ public class PlayerController : MonoBehaviour
         rb2d = GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
+    // Update is called once per frame for physics
     void FixedUpdate()
     {
 
@@ -28,8 +31,9 @@ public class PlayerController : MonoBehaviour
 
     public void MakeBullet()
     {
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetKey(KeyCode.Space) && Time.time > nextFire)
         {
+            nextFire = Time.time + fireRate;
             Instantiate<GameObject>(Bullet);
         }
     }
