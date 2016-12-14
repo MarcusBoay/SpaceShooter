@@ -5,7 +5,7 @@ public class EnemyAI2 : MonoBehaviour
 {
     public float xSpeed;
     //makes the enemy move more in curve or less curved
-    public float yCurveModifier;
+    private float yCurveModifier;
     //makes the enemy move in positive surve or negative curve
     public int yDirectionModifier;
     private float yPos;
@@ -16,6 +16,7 @@ public class EnemyAI2 : MonoBehaviour
     {
         rb2d = GetComponent<Rigidbody2D>();
         yPos = transform.position.y;
+        yCurveModifier = Random.Range(-0.4f, -0.1f);
     }
 
     void FixedUpdate()
