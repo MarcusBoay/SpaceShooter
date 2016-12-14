@@ -4,7 +4,7 @@ using System.Collections;
 public class EnemyAI1 : MonoBehaviour
 {
     public float xSpeed;
-    public float yPos;
+    private float yPos;
     private Rigidbody2D rb2d;
 
     void Start()

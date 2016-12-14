@@ -8,7 +8,7 @@ public class EnemyAI2 : MonoBehaviour
     public float yCurveModifier;
     //makes the enemy move in positive surve or negative curve
     public int yDirectionModifier;
-    public float yPos;
+    private float yPos;
 
     private Rigidbody2D rb2d;
 
