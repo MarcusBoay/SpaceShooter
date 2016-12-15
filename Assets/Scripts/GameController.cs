@@ -14,6 +14,7 @@ public class GameController : MonoBehaviour
     public float spawnWait;
     public float startWait;
     public float waveWait;
+    private GameObject camera;
 
 	void Start ()
     {
@@ -21,6 +22,7 @@ public class GameController : MonoBehaviour
         enemies.Add(enemy2);
         enemies.Add(enemy3);
         StartCoroutine(SpawnWaves(enemies));
+        camera = GameObject.Find("Main Camera").gameObject;
 	}
 
     IEnumerator SpawnWaves(List<GameObject> enemies)
@@ -36,15 +38,15 @@ public class GameController : MonoBehaviour
                 switch (n)
                 {
                     case 0:
-                        spawnPosition = new Vector3(spawnValues.x, Random.Range(-spawnValues.y, spawnValues.y), spawnValues.z);
+                        spawnPosition = new Vector3(spawnValues.x + camera.transform.position.x, Random.Range(-spawnValues.y, spawnValues.y), spawnValues.z);
                         Instantiate(enemies[n], spawnPosition, Quaternion.identity);
                         break;
                     case 1:
-                        spawnPosition = new Vector3(spawnValues.x, Random.Range(-spawnValues.y, 0), spawnValues.z);
+                        spawnPosition = new Vector3(spawnValues.x + camera.transform.position.x, Random.Range(-spawnValues.y, 0), spawnValues.z);
                         Instantiate(enemies[n], spawnPosition, Quaternion.identity);
                         break;
                     case 2:
-                        spawnPosition = new Vector3(spawnValues.x, Random.Range(0,spawnValues.y), spawnValues.z);
+                        spawnPosition = new Vector3(spawnValues.x + camera.transform.position.x, Random.Range(0,spawnValues.y), spawnValues.z);
                         Instantiate(enemies[n], spawnPosition, Quaternion.identity);
                         break;
                 }

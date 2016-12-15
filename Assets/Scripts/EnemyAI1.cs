@@ -9,10 +9,12 @@ public class EnemyAI1 : MonoBehaviour
 
     void Start()
     {
-        rb2d = GetComponent<Rigidbody2D>();
+        //translation
         yPos = transform.position.y;
+        //getting gameobject
+        rb2d = GetComponent<Rigidbody2D>();
     }
-	
+
 	void FixedUpdate ()
     {
         //this will move the enemy in the negative x direction but on a sin wave in the y axis
