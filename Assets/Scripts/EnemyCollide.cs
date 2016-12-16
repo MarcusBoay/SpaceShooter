@@ -19,16 +19,19 @@ public class EnemyCollide : MonoBehaviour
     {
         if (other.tag == "PlayerBullet")
         {
-            //destroy bullet on collision with enemy
-            Destroy(other.gameObject);
+            //deactivate player bullet on collision with enemy
+            other.gameObject.SetActive(false);
+            //set player bullet state to not active
+            other.gameObject.GetComponent<PlayerBulletMovement>().myBulletState = PlayerBulletMovement.BulletState.NOTACTIVE;
+            
             //damage enemy hp
             health = health - other.gameObject.GetComponent<BulletDamage>().bulletDamage;
         }
     }
-
-    //to kill player when he get too close >:(
+    
     void OnCollisionEnter2D(Collision2D other)
     {
+        //to kill player when he get too close >:(
         if (other.gameObject.tag == "Player")
         {
             Destroy(other.gameObject);

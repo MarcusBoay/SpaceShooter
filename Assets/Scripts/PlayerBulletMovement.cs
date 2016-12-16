@@ -9,12 +9,45 @@ public class PlayerBulletMovement : MonoBehaviour
     public float offsetX;
     public float offsetY;
     public float speed;
+
+    public enum BulletState
+    {
+        JUSTACTIVE,
+        ALIVE,
+        NOTACTIVE
+    }
+    public BulletState myBulletState;
     
     void Start()
     {
+        //bullet's player reference
         player = GameObject.Find("Player");
+        //bullet's rigid body reference
         rb2d = GetComponent<Rigidbody2D>();
-        transform.position = player.transform.position + new Vector3(1, 0, 0) * offsetX + new Vector3(0, 1, 0) * offsetY;
-        rb2d.velocity = new Vector3(1, 0, 0) * speed;
+        //when bullet is created, set state to JUST ACTIVE
+        myBulletState = BulletState.JUSTACTIVE;
+    }
+
+    void Update()
+    {
+        //bulet state machine
+        switch (myBulletState)
+        {
+            case (BulletState.JUSTACTIVE):
+                //set bullet position to be infront of the player
+                transform.position = player.transform.position + new Vector3(1, 0, 0) * offsetX + new Vector3(0, 1, 0) * offsetY;
+                //set bullet x velocity
+                rb2d.velocity = new Vector3(1, 0, 0) * speed;
+                //set bullet state to alive
+                myBulletState = BulletState.ALIVE;
+                break;
+            case (BulletState.ALIVE):
+                //nothing, bullet is alive until event happens
+                break;
+            case (BulletState.NOTACTIVE):
+                //switch bullet state to JUST ACTIVE when it is just set active
+                myBulletState = BulletState.JUSTACTIVE;
+                break;
+        }
     }
 }
