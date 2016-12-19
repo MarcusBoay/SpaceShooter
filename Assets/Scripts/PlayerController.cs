@@ -12,7 +12,6 @@ public class PlayerController : MonoBehaviour
     public float fireRate;
     private float nextFire = 0.0f;
     public int numberOfMaxBullets;
-    private int currentBulletIndex;
 
     private GameObject myCamera;
     private GameObject myPlayerBullets;
@@ -48,33 +47,17 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKey(KeyCode.Space) && Time.time > nextFire)
         {
             nextFire = Time.time + fireRate;
-            //lazy way to do indexing of bullets
-            //fix this
-            //maybe put them in a list? and check bullet if isActive or not?
-
-            /*
-            if (!myPlayerBullets.transform.GetChild(0).gameObject.activeSelf)
+            //finds a disabled bullet and activated it then breaks from loop
+            for (int i = 0; i < numberOfMaxBullets; i++)
             {
-                myPlayerBullets.transform.GetChild(0).gameObject.SetActive(true);
-            }
-            else if (!myPlayerBullets.transform.GetChild(1).gameObject.activeSelf)
-            {
-                myPlayerBullets.transform.GetChild(1).gameObject.SetActive(true);
-            }
-            else if (!myPlayerBullets.transform.GetChild(2).gameObject.activeSelf)
-            {
-                myPlayerBullets.transform.GetChild(2).gameObject.SetActive(true);
-            }
-            else if (!myPlayerBullets.transform.GetChild(3).gameObject.activeSelf)
-            {
-                myPlayerBullets.transform.GetChild(3).gameObject.SetActive(true);
-            }*/
-            
-            myPlayerBullets.transform.GetChild(currentBulletIndex).gameObject.SetActive(true);
-            currentBulletIndex += 1;
-            if (currentBulletIndex > numberOfMaxBullets - 1)
-            {
-                currentBulletIndex = 0;
+                if (!myPlayerBullets.transform.GetChild(i).gameObject.activeSelf)
+                {
+                    //set bullet position to be infront of the player
+                    myPlayerBullets.transform.GetChild(i).transform.position = transform.position + new Vector3(1, 0, 0) * myPlayerBullets.transform.GetChild(i).GetComponent<PlayerBulletMovement>().offsetX + new Vector3(0, 1, 0) * myPlayerBullets.transform.GetChild(i).GetComponent<PlayerBulletMovement>().offsetY;
+                    //set bullet gameobject to be true
+                    myPlayerBullets.transform.GetChild(i).gameObject.SetActive(true);
+                    break;
+                }
             }
         }
     }
