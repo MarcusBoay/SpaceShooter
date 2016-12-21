@@ -28,13 +28,4 @@ public class EnemyCollide : MonoBehaviour
             health = health - other.gameObject.GetComponent<BulletDamage>().bulletDamage;
         }
     }
-    
-    void OnCollisionEnter2D(Collision2D other)
-    {
-        //to kill player when he get too close >:(
-        if (other.gameObject.tag == "Player")
-        {
-            Destroy(other.gameObject);
-        }
-    }
 }
