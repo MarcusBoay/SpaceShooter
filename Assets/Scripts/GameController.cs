@@ -34,7 +34,7 @@ public class GameController : MonoBehaviour
             {
                 int n = Random.Range(0, 3);
                 Vector3 spawnPosition;
-                //bad code lol
+                //bad code lol, pls fix
                 switch (n)
                 {
                     case 0:

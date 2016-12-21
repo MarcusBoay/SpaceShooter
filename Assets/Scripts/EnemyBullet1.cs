@@ -10,23 +10,14 @@ public class EnemyBullet1 : MonoBehaviour
     
 	void Start ()
     {
-        //to find player position, if player is ded, kill self
-        try
-        {
-            player = GameObject.Find("Main Camera").transform.FindChild("Player").gameObject;
-            transform.position = player.transform.position + new Vector3(1, 0, 0);
-            rb2d = GetComponent<Rigidbody2D>();
-        }
-        catch
-        {
-            //player iz ded. kill self
-            Destroy(gameObject);
-        }
+        player = GameObject.Find("Main Camera").transform.FindChild("Player").gameObject;
+        transform.position = player.transform.position + new Vector3(1, 0, 0);
+        rb2d = GetComponent<Rigidbody2D>();
 	}
 	
 	void FixedUpdate ()
     {
         //fix lol
-        rb2d.velocity = new Vector3(1, 0, 0);
+        rb2d.velocity = new Vector3(5, 0, 0);
 	}
 }

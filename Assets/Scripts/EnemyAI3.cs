@@ -16,22 +16,22 @@ public class EnemyAI3 : MonoBehaviour
     
 	void Start ()
     {
+        //initializing
+        yPos = transform.position.y;
+        rb2d = GetComponent<Rigidbody2D>();
+        myCamera = GameObject.Find("Main Camera").gameObject;
         //if player is alive, find player gameobject
         try
         {
             player = GameObject.Find("Main Camera").transform.FindChild("Player").gameObject;
+            //for bullets
+            StartCoroutine(SpawnBullets());
         }
         catch
         {
             //player iz ded, do nothing
         }
-        //initializing
-        yPos = transform.position.y;
-        rb2d = GetComponent<Rigidbody2D>();
-        myCamera = GameObject.Find("Main Camera").gameObject;
-        //for bullets
-        StartCoroutine(SpawnBullets());
-	}
+    }
 
 	void FixedUpdate ()
     {
@@ -44,7 +44,11 @@ public class EnemyAI3 : MonoBehaviour
         yield return new WaitForSeconds(startShootWait);
         while (true)
         {
-            Instantiate(Bullet);
+            //check if player is alive, if player is alive, pew pew
+            if (GameObject.Find("Main Camera").transform.FindChild("Player") != null)
+            {
+                Instantiate(Bullet);
+            }
             yield return new WaitForSeconds(shootRate);
         }
     }

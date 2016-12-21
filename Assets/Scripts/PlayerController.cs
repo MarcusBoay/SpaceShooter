@@ -36,8 +36,6 @@ public class PlayerController : MonoBehaviour
     {
         moveHorizontal = Input.GetAxis("Horizontal");
         moveVertical = Input.GetAxis("Vertical");
-        //Debug.Log("hor" + moveHorizontal);
-        //Debug.Log("ver" + moveVertical);
         rb2d.velocity = new Vector3(moveHorizontal, moveVertical, 0) * speed;
     }
 
