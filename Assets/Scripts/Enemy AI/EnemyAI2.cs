@@ -5,14 +5,19 @@ public class EnemyAI2 : MonoBehaviour
 {
     public float xSpeed;
     //makes the enemy move more in curve or less curved
-    private float yCurveModifier;
+    public float yCurveModifier;
     //makes the enemy move in positive surve or negative curve
-    public int yDirectionModifier;
+    public enum _yDirection
+    {
+        UP,
+        DOWN
+    }
+    public _yDirection yDirection;
+    private int yDirectionModifier;
+    //initial y position
     private float yPos;
     //rotation properties
-    public float omegaMin;
-    public float omegaMax;
-    private float myRotation;
+    public float myRotation;
     //for initializing gameobjects
     private GameObject myCamera;
     private Rigidbody2D rb2d;
@@ -21,9 +26,15 @@ public class EnemyAI2 : MonoBehaviour
     {
         //translation
         yPos = transform.position.y;
-        yCurveModifier = Random.Range(-0.4f, -0.1f);
-        //rotation
-        myRotation = Random.Range(omegaMin, omegaMax);
+        //yDirection check
+        if (yDirection == _yDirection.UP)
+        {
+            yDirectionModifier = 1;
+        }
+        else if (yDirection == _yDirection.DOWN)
+        {
+            yDirectionModifier = -1;
+        }
         //getting their respective gameobjects
         rb2d = GetComponent<Rigidbody2D>();
         myCamera = GameObject.Find("Main Camera").gameObject;
