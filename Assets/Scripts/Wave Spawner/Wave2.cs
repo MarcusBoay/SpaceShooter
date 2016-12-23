@@ -6,6 +6,7 @@ public class Wave2 : MonoBehaviour
     public float startWait;
     public float spawnWait;
     public Vector3 spawnValues;
+    public int zRotation;
     public float enemyCount;
     public GameObject nextWave;
     public GameObject enemy;
@@ -23,8 +24,10 @@ public class Wave2 : MonoBehaviour
         for (int i = 0; i < enemyCount; i++)
         {
             Vector3 spawnPosition = new Vector3(spawnValues.x + myCamera.transform.position.x, Random.Range(-spawnValues.y, spawnValues.y) + myCamera.transform.position.y, spawnValues.z);
-            Instantiate(enemy, spawnPosition, Quaternion.identity);
+            Instantiate(enemy, spawnPosition, Quaternion.Euler(0, 0, zRotation));
             yield return new WaitForSeconds(spawnWait);
         }
+        nextWave.SetActive(true);
+        this.gameObject.SetActive(false);
     }
 }
