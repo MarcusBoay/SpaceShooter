@@ -39,7 +39,7 @@ public class EnemyAI3 : MonoBehaviour
 	void FixedUpdate ()
     {
         //move enemy in  x direction
-        //rb2d.MovePosition(new Vector2(xSpeed + transform.position.x,transform.position.y));
+        rb2d.MovePosition(new Vector2(xSpeed + transform.position.x,transform.position.y));
     }
 
     IEnumerator SpawnBullets()
