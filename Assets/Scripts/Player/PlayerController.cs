@@ -54,6 +54,7 @@ public class PlayerController : MonoBehaviour
                     myPlayerBullets.transform.GetChild(i).transform.position = transform.position + new Vector3(1, 0, 0) * myPlayerBullets.transform.GetChild(i).GetComponent<PlayerBulletMovement>().offsetX + new Vector3(0, 1, 0) * myPlayerBullets.transform.GetChild(i).GetComponent<PlayerBulletMovement>().offsetY;
                     //set bullet gameobject to be true
                     myPlayerBullets.transform.GetChild(i).gameObject.SetActive(true);
+                    GetComponent<AudioSource>().Play();
                     break;
                 }
             }

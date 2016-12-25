@@ -4,7 +4,6 @@ using System.Collections;
 public class EnemyAI3 : MonoBehaviour
 {
     public float xSpeed;
-    private float yPos;
 
     public float startShootWait;
     public float shootRate;
@@ -15,14 +14,11 @@ public class EnemyAI3 : MonoBehaviour
     private GameObject player;
     private Rigidbody2D rb2d;
     public GameObject Bullet;
-    private GameObject myCamera;
     
 	void Start ()
     {
         //initializing
-        yPos = transform.position.y;
         rb2d = GetComponent<Rigidbody2D>();
-        myCamera = GameObject.Find("Main Camera").gameObject;
         //if player is alive, find player gameobject
         try
         {
