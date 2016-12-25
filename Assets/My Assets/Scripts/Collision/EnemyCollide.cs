@@ -4,6 +4,7 @@ using System.Collections;
 public class EnemyCollide : MonoBehaviour
 {
     public int health;
+    public GameObject explosion;
 
     void Update()
     {
@@ -11,6 +12,7 @@ public class EnemyCollide : MonoBehaviour
         {
             //destroys enemy gameobject when hp = 0
             Destroy(this.gameObject);
+            Instantiate(explosion, transform.position, transform.rotation);
         }
     }
 
