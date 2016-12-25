@@ -34,12 +34,19 @@ public class PlayerBulletMovement : MonoBehaviour
         switch (myBulletState)
         {
             case (BulletState.JUSTACTIVE):
-                //set bullet position to be infront of the player
-                transform.position = player.transform.position + new Vector3(1, 0, 0) * offsetX + new Vector3(0, 1, 0) * offsetY;
-                //set bullet x velocity
-                rb2d.velocity = new Vector3(1, 0, 0) * speed;
-                //set bullet state to alive
-                myBulletState = BulletState.ALIVE;
+                try
+                {
+                    //set bullet position to be infront of the player
+                    transform.position = player.transform.position + new Vector3(1, 0, 0) * offsetX + new Vector3(0, 1, 0) * offsetY;
+                    //set bullet x velocity
+                    rb2d.velocity = new Vector3(1, 0, 0) * speed;
+                    //set bullet state to alive
+                    myBulletState = BulletState.ALIVE;
+                }
+                catch
+                {
+                    myBulletState = BulletState.NOTACTIVE;
+                }
                 break;
             case (BulletState.ALIVE):
                 //nothing, bullet is alive until event happens
