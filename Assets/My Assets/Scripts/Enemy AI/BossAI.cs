@@ -8,6 +8,7 @@ public class BossAI : MonoBehaviour
     private GameObject player;
     private GameObject myCamera;
     private Rigidbody2D rb2d;
+    public GameObject core;
     public GameObject[] shooters;
     public GameObject bullet;
     public Vector3 bulletOffset;
@@ -19,16 +20,16 @@ public class BossAI : MonoBehaviour
     public float ySpeed;
     private float _ySpeed;
     public float offsetX;
-    //switch this to private later
+    public BossState myBossState;
     public enum BossState
     {
         SPAWNING,
         ALIVE,
-        DYING
+        DYING,
+        DEAD
     }
-    public BossState myBossState;
 
-	void Start () 
+    void Start () 
 	{
         player = GameObject.Find("Main Camera").transform.FindChild("Player").gameObject;
         myCamera = GameObject.Find("Main Camera").gameObject;
@@ -43,6 +44,10 @@ public class BossAI : MonoBehaviour
         if (player.gameObject == null)
         {
             Destroy(gameObject);
+        }
+        if (core == null && myBossState == BossState.ALIVE)
+        {
+            myBossState = BossState.DYING;
         }
         switch (myBossState)
         {
@@ -63,7 +68,12 @@ public class BossAI : MonoBehaviour
                 }
             case (BossState.DYING):
                 {
-                    //place holder
+                    StartCoroutine(gameObject.GetComponent<BossBodyCollide>().Explode());
+                    myBossState = BossState.DEAD;
+                    break;
+                }
+            case (BossState.DEAD):
+                {
                     break;
                 }
         }
@@ -71,7 +81,7 @@ public class BossAI : MonoBehaviour
 
     IEnumerator Move()
     {
-        while (player.gameObject != null)
+        while (player.gameObject != null && core != null)
         {
             //stop for some time
             _spawnInSpeed = 0;
