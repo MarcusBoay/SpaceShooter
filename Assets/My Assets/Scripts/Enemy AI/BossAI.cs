@@ -74,6 +74,7 @@ public class BossAI : MonoBehaviour
                 }
             case (BossState.DEAD):
                 {
+                    rb2d.MovePosition(new Vector2(myCamera.transform.position.x + offsetX, myCamera.transform.position.y + rb2d.transform.position.y));
                     break;
                 }
         }
