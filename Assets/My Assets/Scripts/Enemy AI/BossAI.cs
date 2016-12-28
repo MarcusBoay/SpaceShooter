@@ -9,7 +9,6 @@ public class BossAI : MonoBehaviour
     private GameObject myCamera;
     private Rigidbody2D rb2d;
     public GameObject shooters;
-    public float spawnInTime;
     public float betweenShootTime;
     public float moveTime;
     public float spawnInSpeed;
@@ -34,7 +33,6 @@ public class BossAI : MonoBehaviour
         _ySpeed = 0;
         _spawnInSpeed = spawnInSpeed;
         myBossState = BossState.SPAWNING;
-        StartCoroutine(Move());
     }
 
 	void FixedUpdate () 
@@ -47,12 +45,17 @@ public class BossAI : MonoBehaviour
         {
             case (BossState.SPAWNING):
                 {
-                    rb2d.MovePosition(new Vector3(_spawnInSpeed + offsetX - rb2d.transform.position.x, myCamera.transform.position.y + rb2d.transform.position.y + _ySpeed, 0));
+                    rb2d.MovePosition(new Vector2(_spawnInSpeed + transform.position.x, myCamera.transform.position.y + rb2d.transform.position.y));
+                    if (_spawnInSpeed + transform.position.x <= myCamera.transform.position.x + offsetX)
+                    {
+                        myBossState = BossState.ALIVE;
+                        StartCoroutine(Move());
+                    }
                     break;
                 }
             case (BossState.ALIVE):
                 {
-                    rb2d.MovePosition(new Vector3(myCamera.transform.position.x + offsetX, myCamera.transform.position.y + rb2d.transform.position.y + _ySpeed, 0));
+                    rb2d.MovePosition(new Vector2(myCamera.transform.position.x + offsetX, myCamera.transform.position.y + rb2d.transform.position.y + _ySpeed));
                     break;
                 }
             case (BossState.DYING):
@@ -65,10 +68,6 @@ public class BossAI : MonoBehaviour
 
     IEnumerator Move()
     {
-        //time for move in from right of screen;
-        yield return new WaitForSeconds(spawnInTime);
-        //switch boss state to alive
-        myBossState = BossState.ALIVE;
         while (player.gameObject != null)
         {
             //stop for some time
