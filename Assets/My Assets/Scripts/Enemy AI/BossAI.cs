@@ -8,7 +8,10 @@ public class BossAI : MonoBehaviour
     private GameObject player;
     private GameObject myCamera;
     private Rigidbody2D rb2d;
-    public GameObject shooters;
+    public GameObject[] shooters;
+    public GameObject bullet;
+    public Vector3 bulletOffset;
+    public Vector2 bulletSpeed;
     public float betweenShootTime;
     public float moveTime;
     public float spawnInSpeed;
@@ -91,6 +94,10 @@ public class BossAI : MonoBehaviour
     //function to shoot
     void Shoot()
     {
-        Debug.Log("pew pew");
+        for (int i = 0; i < shooters.Length; i++)
+        {
+            GameObject _bullet = Instantiate(bullet, shooters[i].transform.position + bulletOffset, transform.rotation) as GameObject;
+            _bullet.GetComponent<Rigidbody2D>().velocity = bulletSpeed;
+        }
     }
 }
