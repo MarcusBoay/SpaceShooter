@@ -25,7 +25,6 @@ public class EnemyCollide : MonoBehaviour
             other.gameObject.SetActive(false);
             //set player bullet state to not active
             other.gameObject.GetComponent<PlayerBulletMovement>().myBulletState = PlayerBulletMovement.BulletState.NOTACTIVE;
-            
             //damage enemy hp
             health = health - other.gameObject.GetComponent<BulletDamage>().bulletDamage;
         }
