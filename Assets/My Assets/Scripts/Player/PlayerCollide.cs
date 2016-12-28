@@ -7,7 +7,7 @@ public class PlayerCollide : MonoBehaviour
 
     void OnTriggerEnter2D (Collider2D other)
     {
-        if (other.tag == "EnemyBullet" || other.tag == "Enemy")
+        if (other.tag == "EnemyBullet" || other.tag == "Enemy" || other.tag == "BossBody")
         {
             Destroy(this.gameObject);
             Instantiate(explosion, transform.position, transform.rotation);
