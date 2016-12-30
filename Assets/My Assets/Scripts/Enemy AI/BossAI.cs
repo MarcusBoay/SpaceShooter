@@ -14,7 +14,8 @@ public class BossAI : MonoBehaviour
     public Vector3 bulletOffset;
     public Vector2 bulletSpeed;
     public float betweenShootTime;
-    public float moveTime;
+    public float moveTimeMin;
+    public float moveTimeMax;
     public float spawnInSpeed;
     private float _spawnInSpeed;
     public float ySpeed;
@@ -99,7 +100,7 @@ public class BossAI : MonoBehaviour
             {
                 _ySpeed = -ySpeed;
             }
-            yield return new WaitForSeconds(moveTime);
+            yield return new WaitForSeconds(Random.Range(moveTimeMin,moveTimeMax));
         }
     }
     //function to shoot

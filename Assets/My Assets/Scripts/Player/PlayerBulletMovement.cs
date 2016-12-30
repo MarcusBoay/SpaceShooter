@@ -45,6 +45,7 @@ public class PlayerBulletMovement : MonoBehaviour
                 }
                 catch
                 {
+                    gameObject.SetActive(false);
                     myBulletState = BulletState.NOTACTIVE;
                 }
                 break;
