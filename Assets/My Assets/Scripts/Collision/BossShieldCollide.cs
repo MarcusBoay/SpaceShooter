@@ -20,6 +20,7 @@ public class BossShieldCollide : MonoBehaviour
         {
             //destroys enemy gameobject when hp = 0
             Destroy(this.gameObject);
+            gameObject.GetComponent<EnemyScore>().AddScore();
             Instantiate(explosion, transform.position, transform.rotation);
         }
     }

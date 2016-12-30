@@ -5,13 +5,14 @@ public class EnemyCollide : MonoBehaviour
 {
     public int health;
     public GameObject explosion;
-
+    
     void Update()
     {
         if (health <= 0)
         {
             //destroys enemy gameobject when hp = 0
             Destroy(this.gameObject);
+            gameObject.GetComponent<EnemyScore>().AddScore();
             Instantiate(explosion, transform.position, transform.rotation);
         }
     }
