@@ -41,10 +41,9 @@ public class EnemyAI3 : MonoBehaviour
     IEnumerator SpawnBullets()
     {
         yield return new WaitForSeconds(startShootWait);
-        while (true)
+        while (GameObject.Find("Main Camera").transform.FindChild("Player") != null)
         {
-            //check if player is alive, if player is alive, pew pew
-            if (GameObject.Find("Main Camera").transform.FindChild("Player") != null)
+            try
             {
                 //find vector from enemy to player
                 Vector3 distToPlayer = player.transform.position - transform.position;
@@ -55,7 +54,11 @@ public class EnemyAI3 : MonoBehaviour
                 //set velocity of bullet using unit vector of distance from enemy to player
                 bullet.GetComponent<Rigidbody2D>().velocity = distToPlayer.normalized * bulletSpeed;
             }
+            catch
+            {}
             yield return new WaitForSeconds(shootRate);
         }
+        
+        
     }
 }

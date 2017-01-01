@@ -15,9 +15,13 @@ public class PlayerCollide : MonoBehaviour
     {
         if (other.tag == "EnemyBullet" || other.tag == "Enemy" || other.tag == "BossBody")
         {
-            pl.GetComponent<PlayerLives>().DecreasePlayerLives();
-            Destroy(this.gameObject);
-            Instantiate(explosion, transform.position, transform.rotation);
+            if (this.tag == "Player")
+            {
+                pl.GetComponent<PlayerLives>().DecreasePlayerLives();
+                pl.GetComponent<PlayerStateMachine>().myPlayerState = PlayerStateMachine.PlayerState.DEAD;
+                Destroy(this.gameObject);
+                Instantiate(explosion, transform.position, transform.rotation);
+            }
         }
     }
 }

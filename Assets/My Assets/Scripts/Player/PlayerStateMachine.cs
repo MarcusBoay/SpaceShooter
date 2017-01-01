@@ -3,47 +3,51 @@ using System.Collections;
 
 public class PlayerStateMachine : MonoBehaviour 
 {
-    public GameObject player;
+    public GameObject playerPrefab;
     public GameObject dummyPlayer;
-    private GameObject _dummyPlayer;
     private Rigidbody2D rb2d;
     private GameObject myCamera;
+    private GameObject _player;
     public Vector3 spawnPosition;
     public float spawnInSpeed;
     public float offsetX;
+    public float invincibleTime;
+    public float respawnTime;
     public enum PlayerState
     {
-        SPAWNING1,
-        SPAWNING2,
+        SPAWNING,
         ALIVE,
-        DEAD
+        DEAD,
+        GAMEOVER
     }
     public PlayerState myPlayerState;
 
     void Start()
     {
+        dummyPlayer = GameObject.Find("Main Camera").transform.FindChild("DummyPlayer").gameObject;
         myCamera = GameObject.Find("Main Camera").gameObject;
     }
-
+    
     void FixedUpdate()
     {
         switch (myPlayerState)
         {
-            case (PlayerState.SPAWNING1):
+            case (PlayerState.SPAWNING):
                 {
-                    _dummyPlayer = Instantiate(dummyPlayer, spawnPosition + myCamera.transform.position, Quaternion.Euler(0, 0, 270)) as GameObject;
-                    rb2d = _dummyPlayer.GetComponent<Rigidbody2D>();
-                    myPlayerState = PlayerState.SPAWNING2;
-                    break;
-                }
-            case (PlayerState.SPAWNING2):
-                {
-                    rb2d.MovePosition(new Vector2(spawnInSpeed + transform.position.x, myCamera.transform.position.y + rb2d.transform.position.y));
-                    if (spawnInSpeed + transform.position.x <= myCamera.transform.position.x + offsetX)
+                    if (!dummyPlayer.activeSelf)
                     {
-                        //destroy dummy player
-                        //instantiate player
-                        //change player state to alive
+                        dummyPlayer.SetActive(true);
+                    }
+                    dummyPlayer.transform.position += new Vector3(spawnInSpeed, 0, 0);
+                    if (dummyPlayer.transform.position.x >= myCamera.transform.position.x + offsetX)
+                    {
+                        dummyPlayer.SetActive(false);
+                        dummyPlayer.transform.position = spawnPosition;
+                        _player = Instantiate(playerPrefab, new Vector3(myCamera.transform.position.x + offsetX, myCamera.transform.position.y, 0), Quaternion.Euler(0, 0, 270)) as GameObject;
+                        _player.transform.parent = myCamera.transform;
+                        _player.name = "Player";
+                        myPlayerState = PlayerState.ALIVE;
+                        StartCoroutine(Invincibility(_player));
                     }
                     break;
                 }
@@ -53,12 +57,33 @@ public class PlayerStateMachine : MonoBehaviour
                 }
             case (PlayerState.DEAD):
                 {
-                    //wait for seconds before spawning player
-                    //change state to spawning
+                    StartCoroutine(Respawn());
+                    break;
+                }
+            case (PlayerState.GAMEOVER):
+                {
                     break;
                 }
         }
+    }
+    
+    IEnumerator Invincibility(GameObject player)
+    {
+        player.tag = "Respawn";
+        yield return new WaitForSeconds(invincibleTime);
+        player.tag = "Player";
+    }
 
-        
+    IEnumerator Respawn()
+    {
+        yield return new WaitForSeconds(respawnTime);
+        if(gameObject.GetComponent<PlayerLives>().playerLives < 0)
+        {
+            myPlayerState = PlayerState.GAMEOVER;
+        }
+        else
+        {
+            myPlayerState = PlayerState.SPAWNING;
+        }
     }
 }

@@ -30,6 +30,13 @@ public class PlayerBulletMovement : MonoBehaviour
 
     void Update()
     {
+        //to reference the spawned player
+        try
+        {
+            player = GameObject.Find("Player");
+        }
+        catch
+        {}
         //bulet state machine
         switch (myBulletState)
         {

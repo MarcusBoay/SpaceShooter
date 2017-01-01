@@ -30,8 +30,6 @@ public class PlayerLives : MonoBehaviour
             //no more images to set active
         }
     }
-
-    //function to revive player
     
     public void DecreasePlayerLives()
     {
