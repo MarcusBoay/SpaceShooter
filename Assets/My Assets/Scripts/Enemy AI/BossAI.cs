@@ -6,6 +6,7 @@ public class BossAI : MonoBehaviour
     //make coroutine to move up and down in the y direction depending on where the player is at
     //make sure to disable movement when player is ded
     private GameObject player;
+    private Vector3 _playerPosition;
     private GameObject myCamera;
     private Rigidbody2D rb2d;
     public GameObject core;
@@ -32,7 +33,6 @@ public class BossAI : MonoBehaviour
 
     void Start () 
 	{
-        player = GameObject.Find("Main Camera").transform.FindChild("Player").gameObject;
         myCamera = GameObject.Find("Main Camera").gameObject;
         rb2d = gameObject.GetComponent<Rigidbody2D>();
         _ySpeed = 0;
@@ -42,14 +42,21 @@ public class BossAI : MonoBehaviour
 
 	void FixedUpdate () 
 	{
-        if (player.gameObject == null)
+        try
         {
-            Destroy(gameObject);
+            player = GameObject.Find("Main Camera").transform.FindChild("Player").gameObject;
+            _playerPosition = player.transform.position;
         }
+        catch
+        {
+
+        }
+
         if (core == null && myBossState == BossState.ALIVE)
         {
             myBossState = BossState.DYING;
         }
+
         switch (myBossState)
         {
             case (BossState.SPAWNING):
@@ -83,7 +90,7 @@ public class BossAI : MonoBehaviour
 
     IEnumerator Move()
     {
-        while (player.gameObject != null && core != null)
+        while (core != null)
         {
             //stop for some time
             _spawnInSpeed = 0;
@@ -91,7 +98,7 @@ public class BossAI : MonoBehaviour
             Shoot();
             yield return new WaitForSeconds(betweenShootTime);
             //move up
-            if (player.transform.position.y >= gameObject.transform.position.y)
+            if (_playerPosition.y >= gameObject.transform.position.y)
             {
                 _ySpeed = ySpeed;
             }
