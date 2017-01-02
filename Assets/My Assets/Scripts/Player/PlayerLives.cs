@@ -5,11 +5,21 @@ using UnityEngine.UI;
 public class PlayerLives : MonoBehaviour 
 {
     public int playerLives;
+    private int maxPlayerLives;
     public Image[] playerLifeImages;
+
+    void Start()
+    {
+        maxPlayerLives = 3;
+    }
 
     void Update()
     {
         SetPlayerLifeImages();
+        if (playerLives >= 4)
+        {
+            playerLives = maxPlayerLives;
+        }
     }
 
     private void SetPlayerLifeImages()
