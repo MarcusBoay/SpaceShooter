@@ -4,6 +4,7 @@ using System.Collections;
 public class PlayerBulletMovement : MonoBehaviour
 {
 
+    public GameObject SFXPrefab;
     private Rigidbody2D rb2d;
     private GameObject player;
     public float offsetX;
@@ -49,6 +50,7 @@ public class PlayerBulletMovement : MonoBehaviour
                     rb2d.velocity = new Vector3(1, 0, 0) * speed;
                     //set bullet state to alive
                     myBulletState = BulletState.ALIVE;
+                    Instantiate(SFXPrefab);
                 }
                 catch
                 {
