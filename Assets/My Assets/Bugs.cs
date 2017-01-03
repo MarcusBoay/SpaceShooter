@@ -13,5 +13,6 @@ public class Bugs : MonoBehaviour
      * 8) dummy player and player does not blink to signify invincibility
      * FIXED) player bullets instantly disappear for spawned player
      * FIXED) Shooting enemy having problems with player reference
+     * 11) Not sure what to do wiuth camera movement for endless mode
      */
 }

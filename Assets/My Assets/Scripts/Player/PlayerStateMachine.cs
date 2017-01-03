@@ -71,8 +71,10 @@ public class PlayerStateMachine : MonoBehaviour
     IEnumerator Invincibility(GameObject player)
     {
         player.tag = "Respawn";
+        player.GetComponent<SpriteRenderer>().color = new Color(1, 0.92f, 0.016f, 1);
         yield return new WaitForSeconds(invincibleTime);
         player.tag = "Player";
+        player.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
     }
 
     IEnumerator Respawn()

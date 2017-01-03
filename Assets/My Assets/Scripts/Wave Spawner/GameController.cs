@@ -16,6 +16,7 @@ public class GameController : MonoBehaviour
     public float startWait;
     public float waveWait;
     private GameObject myCamera;
+    private GameObject LM;
 
 	void Start ()
     {
@@ -25,6 +26,7 @@ public class GameController : MonoBehaviour
         enemies.Add(enemy4);
         StartCoroutine(SpawnWaves(enemies));
         myCamera = GameObject.Find("Main Camera").gameObject;
+        LM = GameObject.Find("LoopManager").gameObject;
 	}
 
     IEnumerator SpawnWaves(List<GameObject> enemies)
@@ -59,6 +61,7 @@ public class GameController : MonoBehaviour
                 yield return new WaitForSeconds(spawnWait);
             }
             yield return new WaitForSeconds(waveWait);
+            LM.GetComponent<LoopManager>().loop++;
         }
     }
 }
