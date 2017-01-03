@@ -32,11 +32,16 @@ public class EnemyAI3 : MonoBehaviour
         }
     }
 
+    void Update()
+    {
+        transform.position = new Vector3(transform.position.x + xSpeed, transform.position.y, transform.position.z);
+    }
+    /*
 	void FixedUpdate ()
     {
         //move enemy in  x direction
         rb2d.MovePosition(new Vector2(xSpeed + transform.position.x,transform.position.y));
-    }
+    }*/
 
     IEnumerator SpawnBullets()
     {
@@ -58,7 +63,5 @@ public class EnemyAI3 : MonoBehaviour
             {}
             yield return new WaitForSeconds(shootRate);
         }
-        
-        
     }
 }

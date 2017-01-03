@@ -44,11 +44,14 @@ public class EnemyAI2 : MonoBehaviour
     {
         //rotate enemy 
         transform.Rotate(new Vector3(0, 0, myRotation) * Time.deltaTime);
+        //move enemy
+        //transform.position = new Vector3(transform.position.x + xSpeed, yPos + yDirectionModifier * Mathf.Exp(yCurveModifier * (transform.position.x - myCamera.transform.position.x)), transform.position.z);
+        transform.Translate(new Vector2(xSpeed, 0));
     }
-
+    /*
     void FixedUpdate()
     {
         //enemy move in negative x direction, exponential in y direction
         rb2d.MovePosition(new Vector2(transform.position.x + xSpeed, yPos + yDirectionModifier * Mathf.Exp(yCurveModifier * (transform.position.x - myCamera.transform.position.x))));
-	}
+	}*/
 }
