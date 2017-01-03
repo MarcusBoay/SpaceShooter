@@ -21,7 +21,7 @@ public class EnemyAI1 : MonoBehaviour
         _loop = LM.GetComponent<LoopManager>().loop;
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if (LM.GetComponent<LoopManager>().loop <= maxLoop)
         {
@@ -33,7 +33,7 @@ public class EnemyAI1 : MonoBehaviour
         }
         transform.position = new Vector3(transform.position.x + xSpeed, yPos + Mathf.Sin(transform.position.x) * yAmplitude[_loop - 1], transform.position.z);
     }
-    /*Only use FixedUpdate IF AND ONLY IF the body is NON-KINEMATIC.
+    /*
 	void FixedUpdate ()
     {
         //this will move the enemy in the negative x direction but on a sin wave in the y axis
