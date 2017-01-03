@@ -1,12 +1,16 @@
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class PlayerController : MonoBehaviour
 {
     float moveHorizontal;
     float moveVertical;
-    public float speed;
+    public float[] speed;
+    private float _speed;
+    private int speedSwitch;
     private Rigidbody2D rb2d;
+    private GameObject speedText;
 
     public GameObject Bullet;
     public float fireRate;
@@ -22,6 +26,9 @@ public class PlayerController : MonoBehaviour
         rb2d = GetComponent<Rigidbody2D>();
         myCamera = GameObject.Find("Main Camera").gameObject;
         myPlayerBullets = GameObject.Find("PlayerBullets").gameObject;
+        speedSwitch = 0;
+        _speed = speed[speedSwitch];
+        speedText = GameObject.Find("Canvas").transform.FindChild("SpeedValue").gameObject;
     }
 
     void Update()
@@ -29,6 +36,9 @@ public class PlayerController : MonoBehaviour
         transform.position = new Vector3(Mathf.Clamp(transform.position.x, -8.76f + myCamera.transform.position.x, 8.85f + myCamera.transform.position.x), Mathf.Clamp(transform.position.y, -4.89f + myCamera.transform.position.y, 4.92f + myCamera.transform.position.y), transform.position.z);
 
         MakeBullet();
+        ChangeMoveSpeed();
+        _speed = speed[speedSwitch];
+        speedText.GetComponent<Text>().text = _speed.ToString();
     }
 
     // Update is called once per frame for physics
@@ -36,7 +46,7 @@ public class PlayerController : MonoBehaviour
     {
         moveHorizontal = Input.GetAxis("Horizontal");
         moveVertical = Input.GetAxis("Vertical");
-        rb2d.velocity = new Vector3(moveHorizontal, moveVertical, 0) * speed;
+        rb2d.velocity = new Vector3(moveHorizontal, moveVertical, 0) * _speed;
     }
 
     public void MakeBullet()
@@ -57,6 +67,20 @@ public class PlayerController : MonoBehaviour
                     break;
                 }
             }
+        }
+    }
+
+    public void ChangeMoveSpeed()
+    {
+        //decrease player move speed
+        if (Input.GetKeyDown(KeyCode.Z) && speedSwitch > 0)
+        {
+            speedSwitch--;
+        }
+        //increase player move speed
+        else if (Input.GetKeyDown(KeyCode.X) && speedSwitch < 3)
+        {
+            speedSwitch++;
         }
     }
 }

@@ -36,6 +36,7 @@ public class PlayerStateMachine : MonoBehaviour
                 {
                     if (!dummyPlayer.activeSelf)
                     {
+                        dummyPlayer.transform.position = new Vector3(myCamera.transform.position.x + spawnPosition.x, dummyPlayer.transform.position.y, dummyPlayer.transform.position.z);
                         dummyPlayer.SetActive(true);
                         dummyPlayer.GetComponent<AudioSource>().Play();
                     }

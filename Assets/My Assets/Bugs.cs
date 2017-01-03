@@ -14,5 +14,6 @@ public class Bugs : MonoBehaviour
      * FIXED) player bullets instantly disappear for spawned player
      * FIXED) Shooting enemy having problems with player reference
      * 11) Not sure what to do wiuth camera movement for endless mode
+     * 12) Dummy player doesn't spawn when player dies but spawn audio is played
      */
 }

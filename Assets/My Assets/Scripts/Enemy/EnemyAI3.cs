@@ -6,19 +6,25 @@ public class EnemyAI3 : MonoBehaviour
     public float xSpeed;
 
     public float startShootWait;
-    public float shootRate;
+    public float[] shootRate;
     public float offsetX;
     public float offsetY;
-    public float bulletSpeed;
+    public float[] bulletSpeed;
+
+    public int maxLoop;
+    private int _loop;
 
     private GameObject player;
     private Rigidbody2D rb2d;
     public GameObject Bullet;
+    private GameObject LM;
     
 	void Start ()
     {
         //initializing
         rb2d = GetComponent<Rigidbody2D>();
+        LM = GameObject.Find("LoopManager").gameObject;
+        _loop = 1;
         //if player is alive, find player gameobject
         try
         {
@@ -34,6 +40,14 @@ public class EnemyAI3 : MonoBehaviour
     
 	void FixedUpdate ()
     {
+        if (LM.GetComponent<LoopManager>().loop <= maxLoop)
+        {
+            _loop = LM.GetComponent<LoopManager>().loop;
+        }
+        else
+        {
+            _loop = maxLoop;
+        }
         //move enemy in  x direction
         rb2d.MovePosition(new Vector2(xSpeed + transform.position.x,transform.position.y));
     }
@@ -52,11 +66,11 @@ public class EnemyAI3 : MonoBehaviour
                 //instantiate bullet
                 GameObject bullet = (GameObject)Instantiate(Bullet, startPoint, Quaternion.identity);
                 //set velocity of bullet using unit vector of distance from enemy to player
-                bullet.GetComponent<Rigidbody2D>().velocity = distToPlayer.normalized * bulletSpeed;
+                bullet.GetComponent<Rigidbody2D>().velocity = distToPlayer.normalized * bulletSpeed[(_loop - 1) / 2];
             }
             catch
             {}
-            yield return new WaitForSeconds(shootRate);
+            yield return new WaitForSeconds(shootRate[_loop - 1]);
         }
     }
 }

@@ -18,11 +18,6 @@ public class EnemyAI1 : MonoBehaviour
         //getting gameobject
         rb2d = GetComponent<Rigidbody2D>();
         LM = GameObject.Find("LoopManager").gameObject;
-        _loop = LM.GetComponent<LoopManager>().loop;
-    }
-
-    void FixedUpdate()
-    {
         if (LM.GetComponent<LoopManager>().loop <= maxLoop)
         {
             _loop = LM.GetComponent<LoopManager>().loop;
@@ -31,6 +26,10 @@ public class EnemyAI1 : MonoBehaviour
         {
             _loop = maxLoop;
         }
+    }
+
+    void FixedUpdate()
+    {
         transform.position = new Vector3(transform.position.x + xSpeed, yPos + Mathf.Sin(transform.position.x) * yAmplitude[_loop - 1], transform.position.z);
     }
     /*
