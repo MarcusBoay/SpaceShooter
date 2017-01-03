@@ -26,6 +26,7 @@ public class EnemyAI1 : MonoBehaviour
         {
             _loop = maxLoop;
         }
+        GetComponent<EnemyScore>().score *= _loop;
     }
 
     void FixedUpdate()

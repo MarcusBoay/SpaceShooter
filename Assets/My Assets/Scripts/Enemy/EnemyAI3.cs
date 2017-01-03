@@ -25,6 +25,15 @@ public class EnemyAI3 : MonoBehaviour
         rb2d = GetComponent<Rigidbody2D>();
         LM = GameObject.Find("LoopManager").gameObject;
         _loop = 1;
+        if (LM.GetComponent<LoopManager>().loop <= maxLoop)
+        {
+            _loop = LM.GetComponent<LoopManager>().loop;
+        }
+        else
+        {
+            _loop = maxLoop;
+        }
+        GetComponent<EnemyScore>().score *= _loop;
         //if player is alive, find player gameobject
         try
         {
@@ -40,14 +49,6 @@ public class EnemyAI3 : MonoBehaviour
     
 	void FixedUpdate ()
     {
-        if (LM.GetComponent<LoopManager>().loop <= maxLoop)
-        {
-            _loop = LM.GetComponent<LoopManager>().loop;
-        }
-        else
-        {
-            _loop = maxLoop;
-        }
         //move enemy in  x direction
         rb2d.MovePosition(new Vector2(xSpeed + transform.position.x,transform.position.y));
     }

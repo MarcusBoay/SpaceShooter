@@ -16,7 +16,7 @@ public class CameraMovement : MonoBehaviour
 
     void Update()
     {
-        if (finalWave.activeSelf)
+        if (finalWave.activeSelf || gameObject.transform.position.x > 50)
         {
             isMoving = false;
         }
