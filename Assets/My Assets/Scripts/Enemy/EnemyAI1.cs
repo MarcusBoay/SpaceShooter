@@ -5,7 +5,6 @@ public class EnemyAI1 : MonoBehaviour
 {
     public float xSpeed;
     private float yPos;
-    private Rigidbody2D rb2d;
     public float[] yAmplitude;//0.25
     private GameObject LM;
     private int _loop;
@@ -15,8 +14,6 @@ public class EnemyAI1 : MonoBehaviour
     {
         //translation
         yPos = transform.position.y;
-        //getting gameobject
-        rb2d = GetComponent<Rigidbody2D>();
         LM = GameObject.Find("LoopManager").gameObject;
         if (LM.GetComponent<LoopManager>().loop <= maxLoop)
         {

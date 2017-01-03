@@ -5,13 +5,14 @@ using System.Collections;
 public class LoadScenes : MonoBehaviour 
 {
 
-    public void LoadNormalMode()
+    public void StartGame()
     {
-        SceneManager.LoadScene(1);
+        StartCoroutine(_StartGame());
     }
 
-    public void LoadEndlessMode()
+    IEnumerator _StartGame()
     {
-        SceneManager.LoadScene(2);
+        yield return new WaitForSeconds(0.75f);
+        SceneManager.LoadScene(1);
     }
 }
