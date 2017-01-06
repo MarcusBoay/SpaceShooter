@@ -8,13 +8,14 @@ public class ChangeBGM : MonoBehaviour
     public AudioClip stageClip;
     private float initialAudioVolume;
     public AudioClip introBossClip;
-    private bool isIntroPlaying = false;
+    private bool isIntroPlaying;
     public AudioClip loopingBossClip;
 
     public float fadeOutSeconds;
 
 	void Start () 
 	{
+        isIntroPlaying = false;
         myAudio = GetComponent<AudioSource>();
         initialAudioVolume = myAudio.volume;
 	}
