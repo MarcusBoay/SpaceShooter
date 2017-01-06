@@ -52,7 +52,7 @@ public class PlayerController : MonoBehaviour
     public void MakeBullet()
     {
         //checks if space bar key is hit and if time between bullets is less or more than fire rate
-        if (Input.GetKey(KeyCode.Space) && Time.time > nextFire)
+        if (Input.GetKey(KeyCode.Space) && Time.time > nextFire || Input.GetKey(KeyCode.Joystick1Button1) && Time.time > nextFire)
         {
             nextFire = Time.time + fireRate;
             //finds a disabled bullet and activated it then breaks from loop
@@ -73,12 +73,12 @@ public class PlayerController : MonoBehaviour
     public void ChangeMoveSpeed()
     {
         //decrease player move speed
-        if (Input.GetKeyDown(KeyCode.Z) && speedSwitch > 0)
+        if (Input.GetKeyDown(KeyCode.Z) && speedSwitch > 0 || Input.GetKeyDown(KeyCode.Joystick1Button6) && speedSwitch > 0)
         {
             speedSwitch--;
         }
         //increase player move speed
-        else if (Input.GetKeyDown(KeyCode.X) && speedSwitch < 3)
+        else if (Input.GetKeyDown(KeyCode.X) && speedSwitch < 3 || Input.GetKeyDown(KeyCode.Joystick1Button4) && speedSwitch < 3)
         {
             speedSwitch++;
         }
