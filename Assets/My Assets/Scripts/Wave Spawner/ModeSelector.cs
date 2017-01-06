@@ -24,6 +24,7 @@ public class ModeSelector : MonoBehaviour
                     }
             }
         }
-        catch { Debug.Log("halp"); }
+        catch {}
+        GameStateMachine.myGameState = GameStateMachine.GameState.NORMALENEMY;
 	}
 }
