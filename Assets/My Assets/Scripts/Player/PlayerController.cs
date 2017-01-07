@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviour
         rb2d = GetComponent<Rigidbody2D>();
         myCamera = GameObject.Find("Main Camera").gameObject;
         myPlayerBullets = GameObject.Find("PlayerBullets").gameObject;
-        speedSwitch = 0;
+        speedSwitch = 3;
         _speed = speed[speedSwitch];
         speedText = GameObject.Find("Canvas").transform.FindChild("SpeedValue").gameObject;
     }
@@ -78,7 +78,7 @@ public class PlayerController : MonoBehaviour
             speedSwitch--;
         }
         //increase player move speed
-        else if (Input.GetKeyDown(KeyCode.X) && speedSwitch < 3 || Input.GetKeyDown(KeyCode.Joystick1Button4) && speedSwitch < 3)
+        else if (Input.GetKeyDown(KeyCode.X) && speedSwitch < 7 || Input.GetKeyDown(KeyCode.Joystick1Button4) && speedSwitch < 7)
         {
             speedSwitch++;
         }
