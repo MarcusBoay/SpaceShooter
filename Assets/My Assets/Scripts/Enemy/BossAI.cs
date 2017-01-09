@@ -12,6 +12,7 @@ public class BossAI : MonoBehaviour
     public GameObject core;
     public GameObject[] shooters;
     public GameObject bullet;
+    public GameObject SFXPrefab;
     public Vector3 bulletOffset;
     public Vector2 bulletSpeed;
     public float betweenShootTime;
@@ -118,5 +119,6 @@ public class BossAI : MonoBehaviour
             GameObject _bullet = Instantiate(bullet, shooters[i].transform.position + bulletOffset, transform.rotation) as GameObject;
             _bullet.GetComponent<Rigidbody2D>().velocity = bulletSpeed;
         }
+        Instantiate(SFXPrefab);
     }
 }
