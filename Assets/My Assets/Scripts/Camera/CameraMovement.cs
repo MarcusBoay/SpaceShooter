@@ -6,7 +6,7 @@ public class CameraMovement : MonoBehaviour
     public float xSpeed;
     private Vector3 initialPos;
     public GameObject finalWave;
-    private bool isMoving;
+    public bool isMoving;
 
     void Start()
     {
