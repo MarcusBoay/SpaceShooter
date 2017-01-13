@@ -17,31 +17,4 @@ public class GameStateMachine : MonoBehaviour
     {
         myGameState = GameState.STARTSCREEN;
     }
-    /*
-	void Update () 
-	{
-        switch (myGameState)
-        {
-            case (GameState.STARTSCREEN):
-                {
-                    break;
-                }
-            case (GameState.NORMALENEMY):
-                {
-                    break;
-                }
-            case (GameState.BOSS):
-                {
-                    break;
-                }
-            case (GameState.GAMEOVER):
-                {
-                    break;
-                }
-            case (GameState.WIN):
-                {
-                    break;
-                }
-        }
-	}*/
 }

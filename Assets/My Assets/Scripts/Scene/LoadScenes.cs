@@ -15,4 +15,15 @@ public class LoadScenes : MonoBehaviour
         yield return new WaitForSeconds(0.75f);
         SceneManager.LoadScene(1);
     }
+
+    public void StartScreen()
+    {
+        StartCoroutine(_StartScreen());
+    }
+
+    IEnumerator _StartScreen()
+    {
+        yield return new WaitForSeconds(8);
+        SceneManager.LoadScene(0);
+    }
 }

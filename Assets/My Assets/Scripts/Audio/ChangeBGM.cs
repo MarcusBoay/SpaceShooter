@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class ChangeBGM : MonoBehaviour 
 {
@@ -11,11 +12,15 @@ public class ChangeBGM : MonoBehaviour
     public AudioClip introBossClip;
     private bool isIntroPlaying;
     public AudioClip loopingBossClip;
+    public AudioClip gameOverClip;
     private bool isGameOver;
 
     public float fadeOutSeconds;
+    //for game over text
+    public Text gameOverText;
+    public float gameOverTextBlinkTime;
 
-	void Start () 
+    void Start () 
 	{
         isGameOver = false;
         isIntroPlaying = false;
@@ -30,43 +35,99 @@ public class ChangeBGM : MonoBehaviour
         {
             isIntroPlaying = true;
             myAudio.loop = false;
-            StartCoroutine(SwitchBGM());
+            //play boss bgm
+            StartCoroutine(SwitchBGMToBoss());
         }
-        if (PM.GetComponent<PlayerLives>().playerLives < 0 && !isGameOver)
+        if (PM.GetComponent<PlayerLives>().playerLives < 0 && !isGameOver && GameStateMachine.myGameState == GameStateMachine.GameState.GAMEOVER)
         {
             isGameOver = true;
-            //stop bgm
-            //start gameover bgm
+            //play game over bgm
+            StartCoroutine(PlayGameOver());
+            //blink game over text
+            StartCoroutine(BlinkGameOverText());
+            //send player to start screen
+            GetComponent<LoadScenes>().StartScreen();
         }
 	}
 
-    IEnumerator SwitchBGM()
+    IEnumerator SwitchBGMToBoss()
     {
-        //fade out bgm
-        while (myAudio.volume != 0)
+        bool _switch = true;
+        while (_switch)
         {
-            try
+            _switch = false;
+            //fade out bgm
+            while (myAudio.volume != 0)
             {
-                myAudio.volume -= initialAudioVolume / fadeOutSeconds * 0.1f;
+                try
+                {
+                    myAudio.volume -= initialAudioVolume / fadeOutSeconds * 0.1f;
+                }
+                catch
+                {
+                    myAudio.volume = 0;
+                }
+                yield return new WaitForSeconds(0.1f);
+                //check if game over is true, if so, terminate script
+                if (isGameOver == true)
+                {
+                    break;
+                }
             }
-            catch
+            //check if game over is true, if so, terminate script
+            if (isGameOver == true)
             {
-                myAudio.volume = 0;
+                break;
             }
-            yield return new WaitForSeconds(0.1f);
+            //set intro boss clip
+            myAudio.clip = introBossClip;
+            myAudio.volume = initialAudioVolume;
+            myAudio.Play();
+            while (myAudio.isPlaying)
+            {
+                //wait until intro boss clip is finish
+                yield return null;
+                //check if game over is true, if so, terminate script
+                if (isGameOver == true)
+                {
+                    break;
+                }
+            }
+            //check if game over is true, if so, terminate script
+            if (isGameOver == true)
+            {
+                break;
+            }
+            //set looping boss clip
+            myAudio.clip = loopingBossClip;
+            myAudio.Play();
+            myAudio.loop = true;
         }
-        //set intro boss clip
-        myAudio.clip = introBossClip;
-        myAudio.volume = initialAudioVolume;
+    }
+
+    IEnumerator PlayGameOver()
+    {
+        //stop bgm
+        myAudio.Stop();
+        myAudio.loop = false;
+        //wait for few seconds
+        yield return new WaitForSeconds(2.5f);
+        //start gameover bgm
+        myAudio.clip = gameOverClip;
+        myAudio.volume = 1;
         myAudio.Play();
-        while (myAudio.isPlaying)
+    }
+    
+    public IEnumerator BlinkGameOverText()
+    {
+        yield return new WaitForSeconds(2.5f);
+        for (int i = 0; i < 6; i++)
         {
-            //wait until intro boss clip is finish
-            yield return null;
+            gameOverText.gameObject.SetActive(true);
+            yield return new WaitForSeconds(gameOverTextBlinkTime);
+            gameOverText.gameObject.SetActive(false);
+            yield return new WaitForSeconds(gameOverTextBlinkTime);
         }
-        //set looping boss clip
-        myAudio.clip = loopingBossClip;
-        myAudio.Play();
-        myAudio.loop = true;
+        gameOverText.gameObject.SetActive(true);
     }
 }

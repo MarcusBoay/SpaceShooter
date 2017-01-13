@@ -29,13 +29,13 @@ public class PlayerController : MonoBehaviour
         speedSwitch = 3;
         _speed = speed[speedSwitch];
         speedText = GameObject.Find("Canvas").transform.FindChild("SpeedValue").gameObject;
+        InvokeRepeating("MakeBullet", 0.0001f, 0.0001f);
     }
 
     void Update()
     {
         transform.position = new Vector3(Mathf.Clamp(transform.position.x, -8.76f + myCamera.transform.position.x, 8.85f + myCamera.transform.position.x), Mathf.Clamp(transform.position.y, -4.89f + myCamera.transform.position.y, 4.92f + myCamera.transform.position.y), transform.position.z);
-
-        MakeBullet();
+        
         ChangeMoveSpeed();
         _speed = speed[speedSwitch];
         speedText.GetComponent<Text>().text = _speed.ToString();

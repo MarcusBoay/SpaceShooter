@@ -23,7 +23,6 @@ public class EnemyAI1 : MonoBehaviour
         {
             _loop = maxLoop;
         }
-        //_loop = 1; //for renderer blink testing purposes
         GetComponent<EnemyScore>().score *= _loop;
     }
 

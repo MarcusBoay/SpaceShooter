@@ -11,6 +11,7 @@ public class PlayerLives : MonoBehaviour
     void Start()
     {
         maxPlayerLives = 3;
+        playerLives = maxPlayerLives;
     }
 
     void Update()
@@ -51,8 +52,8 @@ public class PlayerLives : MonoBehaviour
     {
         if (playerLives < 0)
         {
-            Debug.Log("Game Over");
             //change game state machine to gameover
+            GameStateMachine.myGameState = GameStateMachine.GameState.GAMEOVER;
         }
     }
 }

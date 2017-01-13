@@ -1,3 +1,4 @@
+//Credit: GnomenxD from answers.unity3d.com
 Shader "Sprites/Diffuse Flash"
 {
 	Properties
