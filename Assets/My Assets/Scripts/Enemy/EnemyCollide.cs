@@ -34,8 +34,8 @@ public class EnemyCollide : MonoBehaviour
 
     IEnumerator BlinkOnHit()
     {
-        GetComponent<SpriteRenderer>().color = new Color(1, 1, 0, 1);
+        GetComponent<SpriteRenderer>().material.color = new Color(1, 1, 0, 1);
         yield return new WaitForSeconds(0.02f);
-        GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
+        GetComponent<SpriteRenderer>().material.color = new Color(1, 1, 1, 1);
     }
 }

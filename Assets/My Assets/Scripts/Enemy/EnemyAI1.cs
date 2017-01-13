@@ -23,6 +23,7 @@ public class EnemyAI1 : MonoBehaviour
         {
             _loop = maxLoop;
         }
+        _loop = 1; //for renderer blink testing purposes
         GetComponent<EnemyScore>().score *= _loop;
     }
 
@@ -30,11 +31,11 @@ public class EnemyAI1 : MonoBehaviour
     {
         transform.position = new Vector3(transform.position.x + xSpeed, yPos + Mathf.Sin(transform.position.x) * yAmplitude[_loop - 1], transform.position.z);
     }
-    /*
+    /*this method lags severely!!! (Why???)
 	void FixedUpdate ()
     {
         //this will move the enemy in the negative x direction but on a sin wave in the y axis
         //rb2d.MovePosition(new Vector2(transform.position.x + xSpeed, yPos + Mathf.Sin(transform.position.x) * yAmplitude[_loop-1]));
-        //^above method lags severely
+        //
 	}*/
 }
