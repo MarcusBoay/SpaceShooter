@@ -5,9 +5,12 @@ public class ModeSelector : MonoBehaviour
 {
     public GameObject NWS;
     public GameObject EWS;
+    public GameObject finalWave;
+    private bool isFinalWaveSpawned;
        
 	void Start () 
 	{
+        isFinalWaveSpawned = false;
         try
         {
             switch (ModeManager.GameMode)

@@ -33,5 +33,6 @@ public class BossBodyCollide : MonoBehaviour
         }
         Destroy(gameObject);
         Instantiate(explosionBig, transform.position, transform.rotation);
+        GameStateMachine.myGameState = GameStateMachine.GameState.WIN;
     }
 }

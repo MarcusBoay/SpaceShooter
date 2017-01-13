@@ -14,15 +14,23 @@ public class ChangeBGM : MonoBehaviour
     public AudioClip loopingBossClip;
     public AudioClip gameOverClip;
     private bool isGameOver;
+    public float gameOverWaitTime;
+    public AudioClip winClip;
+    public float winWaitTime;
+    private bool isWin;
 
     public float fadeOutSeconds;
     //for game over text
     public Text gameOverText;
     public float gameOverTextBlinkTime;
+    //for win text
+    public Text winText;
+    public float winTextBlinkTime;
 
     void Start () 
 	{
         isGameOver = false;
+        isWin = false;
         isIntroPlaying = false;
         myAudio = GetComponent<AudioSource>();
         initialAudioVolume = myAudio.volume;
@@ -42,9 +50,19 @@ public class ChangeBGM : MonoBehaviour
         {
             isGameOver = true;
             //play game over bgm
-            StartCoroutine(PlayGameOver());
+            StartCoroutine(InstantSwitchBGMAndPlay(gameOverClip, gameOverWaitTime));
             //blink game over text
-            StartCoroutine(BlinkGameOverText());
+            StartCoroutine(BlinkText(gameOverText, gameOverTextBlinkTime, gameOverWaitTime));
+            //send player to start screen
+            GetComponent<LoadScenes>().StartScreen();
+        }
+        else if (GameStateMachine.myGameState == GameStateMachine.GameState.WIN && !isWin && PM.GetComponent<PlayerLives>().playerLives >= 0)
+        {
+            isWin = true;
+            //play win bgm
+            StartCoroutine(InstantSwitchBGMAndPlay(winClip, winWaitTime));
+            //blink win text
+            StartCoroutine(BlinkText(winText, winTextBlinkTime, winWaitTime));
             //send player to start screen
             GetComponent<LoadScenes>().StartScreen();
         }
@@ -105,29 +123,31 @@ public class ChangeBGM : MonoBehaviour
         }
     }
 
-    IEnumerator PlayGameOver()
+    IEnumerator InstantSwitchBGMAndPlay(AudioClip myClip, float waitTime)
     {
         //stop bgm
         myAudio.Stop();
         myAudio.loop = false;
         //wait for few seconds
-        yield return new WaitForSeconds(2.5f);
+        yield return new WaitForSeconds(waitTime);
         //start gameover bgm
-        myAudio.clip = gameOverClip;
-        myAudio.volume = 1;
+        myAudio.clip = myClip;
+        myAudio.volume = initialAudioVolume;
         myAudio.Play();
     }
     
-    public IEnumerator BlinkGameOverText()
+    IEnumerator BlinkText(Text myText, float blinkTime, float waitTime)
     {
-        yield return new WaitForSeconds(2.5f);
+        yield return new WaitForSeconds(waitTime);
         for (int i = 0; i < 6; i++)
         {
-            gameOverText.gameObject.SetActive(true);
-            yield return new WaitForSeconds(gameOverTextBlinkTime);
-            gameOverText.gameObject.SetActive(false);
-            yield return new WaitForSeconds(gameOverTextBlinkTime);
+            myText.gameObject.SetActive(true);
+            yield return new WaitForSeconds(blinkTime);
+            myText.gameObject.SetActive(false);
+            yield return new WaitForSeconds(blinkTime);
         }
-        gameOverText.gameObject.SetActive(true);
+        myText.gameObject.SetActive(true);
     }
+
+
 }
