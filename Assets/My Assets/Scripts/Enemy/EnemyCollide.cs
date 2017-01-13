@@ -28,14 +28,15 @@ public class EnemyCollide : MonoBehaviour
             other.gameObject.GetComponent<PlayerBulletMovement>().myBulletState = PlayerBulletMovement.BulletState.NOTACTIVE;
             //damage enemy hp
             health = health - other.gameObject.GetComponent<BulletDamage>().bulletDamage;
+            //blink on hit
             StartCoroutine(BlinkOnHit());
         }
     }
 
     IEnumerator BlinkOnHit()
     {
-        GetComponent<SpriteRenderer>().material.color = new Color(1, 1, 0, 1);
+        GetComponent<SpriteRenderer>().material.SetFloat("_FlashAmount", 1);
         yield return new WaitForSeconds(0.02f);
-        GetComponent<SpriteRenderer>().material.color = new Color(1, 1, 1, 1);
+        GetComponent<SpriteRenderer>().material.SetFloat("_FlashAmount", 0);
     }
 }

@@ -37,7 +37,15 @@ public class BossShieldCollide : MonoBehaviour
             if (BossBody.GetComponent<BossAI>().myBossState != BossAI.BossState.SPAWNING)
             {
                 curHealth = curHealth - other.gameObject.GetComponent<BulletDamage>().bulletDamage;
+                StartCoroutine(BlinkOnHit());
             }
         }
+    }
+
+    IEnumerator BlinkOnHit()
+    {
+        GetComponent<SpriteRenderer>().material.SetFloat("_FlashAmount", 1);
+        yield return new WaitForSeconds(0.02f);
+        GetComponent<SpriteRenderer>().material.SetFloat("_FlashAmount", 0);
     }
 }

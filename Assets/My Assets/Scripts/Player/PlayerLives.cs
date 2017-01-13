@@ -52,6 +52,7 @@ public class PlayerLives : MonoBehaviour
         if (playerLives < 0)
         {
             Debug.Log("Game Over");
+            //change game state machine to gameover
         }
     }
 }

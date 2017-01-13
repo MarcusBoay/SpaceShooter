@@ -4,29 +4,39 @@ using System.Collections;
 public class ChangeBGM : MonoBehaviour 
 {
     private AudioSource myAudio;
+    private GameObject PM;
 
     public AudioClip stageClip;
     private float initialAudioVolume;
     public AudioClip introBossClip;
     private bool isIntroPlaying;
     public AudioClip loopingBossClip;
+    private bool isGameOver;
 
     public float fadeOutSeconds;
 
 	void Start () 
 	{
+        isGameOver = false;
         isIntroPlaying = false;
         myAudio = GetComponent<AudioSource>();
         initialAudioVolume = myAudio.volume;
+        PM = GameObject.Find("PlayerManager").gameObject;
 	}
 
 	void Update () 
 	{
-        if (GameStateMachine.myGameState == GameStateMachine.GameState.BOSS && !isIntroPlaying)
+        if (GameStateMachine.myGameState == GameStateMachine.GameState.BOSS && !isIntroPlaying && PM.GetComponent<PlayerLives>().playerLives >= 0)
         {
             isIntroPlaying = true;
             myAudio.loop = false;
             StartCoroutine(SwitchBGM());
+        }
+        if (PM.GetComponent<PlayerLives>().playerLives < 0 && !isGameOver)
+        {
+            isGameOver = true;
+            //stop bgm
+            //start gameover bgm
         }
 	}
 
