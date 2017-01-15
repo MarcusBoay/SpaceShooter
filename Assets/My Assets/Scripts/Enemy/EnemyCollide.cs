@@ -5,6 +5,7 @@ public class EnemyCollide : MonoBehaviour
 {
     public int health;
     public GameObject explosion;
+    public GameObject blinkAudio;
 
     void Update()
     {
@@ -28,13 +29,17 @@ public class EnemyCollide : MonoBehaviour
             other.gameObject.GetComponent<PlayerBulletMovement>().myBulletState = PlayerBulletMovement.BulletState.NOTACTIVE;
             //damage enemy hp
             health = health - other.gameObject.GetComponent<BulletDamage>().bulletDamage;
-            //blink on hit
-            StartCoroutine(BlinkOnHit());
+            //blink on hit if enemy is not ded
+            if (health > 0)
+            {
+                StartCoroutine(BlinkOnHit());
+            }
         }
     }
 
     IEnumerator BlinkOnHit()
     {
+        Instantiate(blinkAudio, transform.position, transform.rotation);
         GetComponent<SpriteRenderer>().material.SetFloat("_FlashAmount", 1);
         yield return new WaitForSeconds(0.02f);
         GetComponent<SpriteRenderer>().material.SetFloat("_FlashAmount", 0);

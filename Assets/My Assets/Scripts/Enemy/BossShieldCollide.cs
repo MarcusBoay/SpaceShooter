@@ -8,6 +8,7 @@ public class BossShieldCollide : MonoBehaviour
     public int curHealth;
     public GameObject explosion;
     public GameObject BossBody;
+    public GameObject blinkAudio;
 
     void Start()
     {
@@ -44,6 +45,7 @@ public class BossShieldCollide : MonoBehaviour
 
     IEnumerator BlinkOnHit()
     {
+        Instantiate(blinkAudio, transform.position, transform.rotation);
         GetComponent<SpriteRenderer>().material.SetFloat("_FlashAmount", 1);
         yield return new WaitForSeconds(0.02f);
         GetComponent<SpriteRenderer>().material.SetFloat("_FlashAmount", 0);
