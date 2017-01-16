@@ -10,6 +10,7 @@ public class BossAI : MonoBehaviour
     private GameObject myCamera;
     private Rigidbody2D rb2d;
     public GameObject core;
+    public GameObject shieldLast;
     public GameObject[] shooters;
     public GameObject bullet;
     public GameObject SFXPrefab;
@@ -18,6 +19,8 @@ public class BossAI : MonoBehaviour
     public float betweenShootTime;
     public float moveTimeMin;
     public float moveTimeMax;
+    public float moveRageTimeMin;
+    public float moveRageTimeMax;
     public float spawnInSpeed;
     private float _spawnInSpeed;
     public float ySpeed;
@@ -108,7 +111,15 @@ public class BossAI : MonoBehaviour
             {
                 _ySpeed = -ySpeed;
             }
-            yield return new WaitForSeconds(Random.Range(moveTimeMin,moveTimeMax));
+            //rage mode switcher, if the last shield of boss is destroyed, enter rage mode
+            if (shieldLast != null)
+            {
+                yield return new WaitForSeconds(Random.Range(moveTimeMin, moveTimeMax));
+            }
+            else
+            {
+                yield return new WaitForSeconds(Random.Range(moveRageTimeMin, moveRageTimeMax));
+            }
         }
     }
     //function to shoot
